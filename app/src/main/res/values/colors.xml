@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#222223</color>
+    <color name="colorPrimaryDark">#3c3c41</color>
+    <color name="colorAccent">#060606</color>
+    <color name="basketball">#f17139</color>
+    <color name="football">#32b423</color>
+    <color name="tennis">#d1c024</color>
+    <color name="jogging">#37b3ae</color>
+
+</resources>

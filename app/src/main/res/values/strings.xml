@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">SportApp</string>
+    <string name="kosarka">KOŠARKA</string>
+    <string name="nogomet">NOGOMET</string>
+    <string name="tenis">TENIS</string>
+    <string name="trcanje">TRČANJE</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="title_activity_jogging_race_details">Map</string>
+</resources>
