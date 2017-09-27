@@ -65,20 +65,20 @@ public class JoggingRaceDetails extends FragmentActivity implements OnMapReadyCa
         Intent i = getIntent();
         race = i.getParcelableExtra("RACE");
 
-        // dohvati listu statistika koje su vezane uz trenutnu utrku pomoću id-a utrke
+        
         ArrayList<JoggingStats> stats = dbHelper.getJoggingRunnerStats(race.getRaceId(), false);
         for (JoggingStats st : stats)
         {
-            // za svaku statistiku, iskombiniraj sportaša s runnerId-em te statistike i njegovu statistiku u novi RunnerStats
-            rs.add(new JoggingRunnerStats(dbHelper.getAthlete(st.getRunnerId()), st));  // dodaj RunnerStats na listu za listview
+            
+            rs.add(new JoggingRunnerStats(dbHelper.getAthlete(st.getRunnerId()), st));  
         }
 
-        lvRunners = (ListView) findViewById(R.id.lvRunnerStats);    //nađi listview
-        adapter = new ArrayAdapter<JoggingRunnerStats>(this, android.R.layout.simple_list_item_1, rs);  // popuni adapter
-        lvRunners.setAdapter(adapter); // poveži adapter i listu
+        lvRunners = (ListView) findViewById(R.id.lvRunnerStats);    
+        adapter = new ArrayAdapter<JoggingRunnerStats>(this, android.R.layout.simple_list_item_1, rs); 
+        lvRunners.setAdapter(adapter); 
 
         mMap = googleMap;
-        mMap.setOnMapLoadedCallback(this); // slušaj kada će mapa biti učitana
+        mMap.setOnMapLoadedCallback(this); 
     }
 
     private com.google.android.gms.maps.model.LatLng convert(LatLng ll)
@@ -87,34 +87,33 @@ public class JoggingRaceDetails extends FragmentActivity implements OnMapReadyCa
     }
 
     @Override
-    public void onMapLoaded() { // kad je mapa učitana
+    public void onMapLoaded() { 
         if (race != null)
         {
-            // Dohvati komprimirani zapis rute utrke
+            
             EncodedPolyline encp = new EncodedPolyline(race.getEncodedRoute());
 
             ArrayList<com.google.android.gms.maps.model.LatLng> points = new ArrayList();
-            for (LatLng ll : encp.decodePath()) // naredbom decodePath iz komprimiranog zapisa napravi listu LatLng
+            for (LatLng ll : encp.decodePath()) 
             {
                 points.add(convert(ll));
             }
 
-            // nacrtaj PolyLine na mapi iz dekodirane liste
+            
             mMap.addPolyline(new PolylineOptions().addAll(points));
 
-            // dodaj marker na početak rute
+       
             Marker m1 = mMap.addMarker(new MarkerOptions().position(points.get(0))
                     .title("Start")
-                    .snippet(race.getStart()));
-            // dodaj marker na kraj liste
+          
             Marker m2 = mMap.addMarker(new MarkerOptions().position(points.get(points.size() - 1))
                     .title("Cilj")
                     .snippet(race.getFinish()));
-            // napravi Bounds objekt (granice koje uokviruju dodanu rutu)
+            
             LatLngBounds b =  new LatLngBounds.Builder().include(m1.getPosition())
                     .include(m2.getPosition())
                     .build();
-            // zumiraj mapu na bounds
+            
             mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(b, 10));
         }
     }
